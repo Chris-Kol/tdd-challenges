@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Tests;
 
-use App\Exception\CodeNotFoundException;
-use App\Exception\InvalidUrlException;
-use App\UrlShortener;
 use App\UrlShortenerInterface;
 use PHPUnit\Framework\TestCase;
 
