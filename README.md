@@ -20,6 +20,7 @@ Currently, the repository includes the following challenges:
 - **[01-URL Shortener](/01-url-shortener)** - Implement a service that converts long URLs into unique short codes and retrieves the original URLs.
 - **[02-Password Validator](/02-password-validator)** - Create a validator that ensures passwords meet security requirements with detailed error reporting.
 - **[03-Bank Account](/03-bank-account)** - Develop a bank account service with deposits, withdrawals, and statement printing.
+- **[04-Mars Rover](/04-mars-rover-challenge)** - Build a control system for a Mars rover that navigates a grid with obstacles.
 
 More challenges will be added in the future.
 
