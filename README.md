@@ -1,12 +1,24 @@
 # 🧪 TDD Challenges for Backend Chapter
 
-This repository contains a collection of Test-Driven Development (TDD) challenges designed for backend developers. Each challenge is structured to be completed in a 45-minute collaborative session.
+This repository contains a collection of Test-Driven Development (TDD) challenges designed for backend developers. Each challenge is structured to be completed in a 45-minute collaborative session, with challenges organized by increasing difficulty.
+
+# 🎯 Challenge Difficulty Levels
+The challenges in this repository are organized by increasing difficulty:
+
+- URL Shortener (Level 1) - Basic service with validation and error handling
+- Password Validator (Level 2) - String validation with multiple rules and error reporting
+- Bank Account (Level 3) - State management and formatted output
+- Mars Rover (Level 4) - Complex domain logic and command processing
+- Ticket Reservation (Level 5) - Multiple domain objects and business rules
+
+Each challenge builds upon skills learned in previous challenges, introducing new concepts incrementally.
 
 ## 🚀 Available Challenges
 
 Currently, the repository includes the following challenges:
 
-- **[URL Shortener](/url-shortener)** - Implement a service that converts long URLs into unique short codes and retrieves the original URLs.
+- **[01-URL Shortener](/01-url-shortener)** - Implement a service that converts long URLs into unique short codes and retrieves the original URLs.
+- **[02-Password Validator](/02-password-validator)** - Create a validator that ensures passwords meet security requirements with detailed error reporting.
 
 More challenges will be added in the future.
 
@@ -52,7 +64,7 @@ To work on a challenge:
 
 2. Navigate to the challenge directory:
    ```bash
-   cd url-shortener
+   cd 01-url-shortener
    ```
 
 3. Read the README.md in the challenge directory for specific instructions
@@ -73,11 +85,11 @@ To work on a challenge:
 
 To add a new challenge to this repository:
 
-1. Create a new directory with a descriptive name
-2. Include a clear README.md with requirements and instructions
-3. Set up a composer.json file with necessary dependencies
-4. Create interface definitions and exception classes
-5. Write failing tests that guide participants through the implementation
+1. Create a new directory with a number prefix and descriptive name (e.g., `06-event-emitter`)
+2. Include a clear README.md with requirements and instructions 
+3. Set up a composer.json file with necessary dependencies 
+4. Create interface definitions and exception classes 
+5. Write failing tests that guide participants through the implementation 
 6. Provide a basic project structure without the solution
 
 ## 📜 License
