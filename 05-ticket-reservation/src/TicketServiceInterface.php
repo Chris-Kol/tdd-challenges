@@ -13,6 +13,15 @@ use App\Exception\SeatHoldExpiredException;
 interface TicketServiceInterface
 {
     /**
+     * Create a venue with the specified dimensions
+     * @param int $venueId The venue identifier
+     * @param int $rows The number of rows
+     * @param int $seatsPerRow The number of seats per row
+     * @return void
+     */
+    public function createVenue(int $venueId, int $rows, int $seatsPerRow): void;
+
+    /**
      * Find the number of seats available within the venue
      * @param int $venueId The venue identifier
      * @return int The number of available seats

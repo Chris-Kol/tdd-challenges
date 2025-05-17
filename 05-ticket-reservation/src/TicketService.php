@@ -19,6 +19,15 @@ class TicketService implements TicketServiceInterface
     /**
      * @inheritDoc
      */
+    public function createVenue(int $venueId, int $rows, int $seatsPerRow): void
+    {
+        // This is just a placeholder to make the tests runnable
+        throw new \Exception('Not implemented');
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function numSeatsAvailable(int $venueId): int
     {
         // This is just a placeholder to make the tests runnable
