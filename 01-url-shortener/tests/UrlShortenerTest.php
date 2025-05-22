@@ -6,7 +6,8 @@ namespace Tests;
 
 use App\UrlShortenerInterface;
 use PHPUnit\Framework\TestCase;
-
+use App\UrlShortener;
+use function PHPUnit\Framework\assertEquals;
 /**
  * @covers \App\UrlShortener
  */
@@ -17,11 +18,12 @@ class UrlShortenerTest extends TestCase
     protected function setUp(): void
     {
         // TODO: Initialize your implementation here
+        $this->urlShortener = new UrlShortener();
     }
 
     public function testShortenReturnsCodeOfCorrectLength(): void
     {
-        $this->markTestIncomplete('Implement this test');
+        assertEquals(6,strlen($this->urlShortener->shorten("https://friv.com")));
     }
 
     public function testGetUrlReturnsOriginalUrl(): void
