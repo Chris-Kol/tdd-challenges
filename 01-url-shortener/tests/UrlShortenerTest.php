@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Tests;
 
+use App\Exception\CodeNotFoundException;
+use App\Exception\InvalidUrlException;
+use App\UrlShortener;
 use App\UrlShortenerInterface;
 use PHPUnit\Framework\TestCase;
 
@@ -16,27 +19,40 @@ class UrlShortenerTest extends TestCase
 
     protected function setUp(): void
     {
-        // TODO: Initialize your implementation here
+        parent::setUp();
+        $this->urlShortener = new UrlShortener();
     }
 
     public function testShortenReturnsCodeOfCorrectLength(): void
     {
-        $this->markTestIncomplete('Implement this test');
+        $dummyUrl = 'https://example.com';
+        $shortenedUrl = $this->urlShortener->shorten($dummyUrl);
+        $this->assertEquals(6, strlen($shortenedUrl), 'Shortened URL should be 6 characters long');
     }
 
     public function testGetUrlReturnsOriginalUrl(): void
     {
-        $this->markTestIncomplete('Implement this test');
+        $shortened = $this->urlShortener->shorten('https://test.com');
+        $originalUrl = $this->urlShortener->getUrl($shortened);
+        $this->assertEquals('https://test.com', $originalUrl);
     }
 
     public function testShortenThrowsExceptionForInvalidUrl(): void
     {
-        $this->markTestIncomplete('Implement this test');
+        $invalidUrl = 'not-a-valid-url';
+        $this->expectException(InvalidUrlException::class);
+        $this->expectExceptionMessage('Invalid URL format: "not-a-valid-url"');
+        $this->urlShortener->shorten($invalidUrl);
     }
 
     public function testGetUrlThrowsExceptionForNonExistentCode(): void
     {
-        $this->markTestIncomplete('Implement this test');
+        $dummyOriginal = 'https://dummy.foo';
+        $dummyShort = $this->urlShortener->shorten($dummyOriginal);
+        $invalidCode = 'nonexistentcode';
+        $this->expectException(CodeNotFoundException::class);
+        $this->expectExceptionMessage('Code not found: "nonexistentcode"');
+        $this->urlShortener->getUrl($invalidCode);
     }
 
     public function testSameLongUrlProducesSameCode(): void
