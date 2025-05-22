@@ -11,8 +11,8 @@ class UrlShortener implements UrlShortenerInterface
     // Participants will implement this class during the challenge
     public function shorten(string $url): string
     {
-        // This is just a placeholder to make the tests runnable
-        throw new \Exception('Not implemented');
+        $hashedUrl = md5($url);
+        return substr($hashedUrl,0,6);
     }
 
     public function getUrl(string $code): string

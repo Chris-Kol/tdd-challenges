@@ -28,7 +28,8 @@ class UrlShortenerTest extends TestCase
 
     public function testGetUrlReturnsOriginalUrl(): void
     {
-        $this->markTestIncomplete('Implement this test');
+        $hashedUrl = $this->urlShortener->shorten("https://friv.com");
+        assertEquals($this->urlShortener->getUrl($hashedUrl),"https://friv.com");
     }
 
     public function testShortenThrowsExceptionForInvalidUrl(): void
