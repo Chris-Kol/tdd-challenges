@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests;
 
+use App\UrlShortener;
 use App\UrlShortenerInterface;
 use PHPUnit\Framework\TestCase;
 
@@ -16,18 +17,40 @@ class UrlShortenerTest extends TestCase
 
     protected function setUp(): void
     {
-        // TODO: Initialize your implementation here
+        $this->urlShortener = new UrlShortener();
     }
 
     public function testShortenReturnsCodeOfCorrectLength(): void
     {
-        $this->markTestIncomplete('Implement this test');
+        $url = "https://example.com/parameter";
+
+        $this->assertEquals(6, strlen($this->urlShortener->shorten($url)));
     }
 
     public function testGetUrlReturnsOriginalUrl(): void
     {
-        $this->markTestIncomplete('Implement this test');
+        $urlShortener = new UrlShortener();
+        $originalUrl = 'https://efront.test';
+
+        $code = $urlShortener->shorten($originalUrl);
+
+        $result = $urlShortener->getUrl($code);
+
+        self::assertSame($originalUrl, $result);
     }
+
+    public function testWorksWithMultipleCodesInRandomOrder(): void
+    {
+        $urlShortener = new UrlShortener();
+        $originalUrl1 = 'https://efront.test';
+        $originalUrl2 = 'https://efront.test/foo/bar';
+        $code1 = $urlShortener->shorten($originalUrl1);
+        $code2 = $urlShortener->shorten($originalUrl2);
+
+        self::assertSame($originalUrl1, $urlShortener->getUrl($code1));
+        self::assertSame($originalUrl2, $urlShortener->getUrl($code2));
+    }
+
 
     public function testShortenThrowsExceptionForInvalidUrl(): void
     {

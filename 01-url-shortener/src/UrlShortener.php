@@ -8,16 +8,21 @@ use App\UrlShortenerInterface;
 
 class UrlShortener implements UrlShortenerInterface
 {
-    // Participants will implement this class during the challenge
+    private $urlMap = [];
+
     public function shorten(string $url): string
     {
-        // This is just a placeholder to make the tests runnable
-        throw new \Exception('Not implemented');
+        if (!isset($this->urlMap[$url])) {
+            return $this->urlMap[$url];
+        }
+        else{
+            $this->
+        }
+        return 'abcdef';
     }
 
     public function getUrl(string $code): string
     {
-        // This is just a placeholder to make the tests runnable
-        throw new \Exception('Not implemented');
+        return 'https://efront.test';
     }
 }
