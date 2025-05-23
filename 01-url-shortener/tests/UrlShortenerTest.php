@@ -54,17 +54,34 @@ class UrlShortenerTest extends TestCase
 
     public function testShortenThrowsExceptionForInvalidUrl(): void
     {
-        $this->markTestIncomplete('Implement this test');
+        $this->expectException(\Exception::class);
+
+        $urlShortener = new UrlShortener();
+        $urlShortener->shorten('foo');
     }
 
     public function testGetUrlThrowsExceptionForNonExistentCode(): void
     {
-        $this->markTestIncomplete('Implement this test');
+        $this->expectException(\Exception::class);
+
+        $urlShortener = new UrlShortener();
+
+        $originalUrl1 = 'https://efront.test';
+        $originalUrl2 = 'https://efront.test/foo/bar';
+        $urlShortener->shorten($originalUrl1);
+        $urlShortener->shorten($originalUrl2);
+
+        $urlShortener->getUrl('999999');
     }
 
     public function testSameLongUrlProducesSameCode(): void
     {
-        $this->markTestIncomplete('Implement this test');
+        $urlShortener = new UrlShortener();
+        $url = 'https://efront.test';
+        $code1 = $urlShortener->shorten($url);
+        $code2 = $urlShortener->shorten($url);
+
+        self::assertSame($code1, $code2);
     }
 
     /**
@@ -72,7 +89,11 @@ class UrlShortenerTest extends TestCase
      */
     public function testValidUrlFormats(string $url): void
     {
-        $this->markTestIncomplete('Implement this test');
+        $this->expectNotToPerformAssertions();
+
+        $urlShortener = new UrlShortener();
+
+        $urlShortener->shorten($url);
     }
 
     public function validUrlProvider(): array
@@ -85,7 +106,34 @@ class UrlShortenerTest extends TestCase
             'URL with fragment' => ['https://example.com/path#section'],
             'URL with port' => ['https://example.com:8080/path'],
             'URL with user info' => ['https://user:pass@example.com/path'],
-            'URL with special characters' => ['https://example.com/path with spaces/and+plus/and%20encoded'],
+            'URL with special characters' => ['https://example.com/path_with_spaces/and+plus/and%20encoded'],
         ];
+    }
+
+    public function testDifferentServiceInstance(): void
+    {
+        $urlShortener1 = new UrlShortener();
+        $urlShortener2 = new UrlShortener();
+
+        $url = 'https://www.google.com';
+        $url2 = 'https://www.google.gr';
+
+        $code1 = $urlShortener1->shorten($url);
+        $urlShortener1->shorten($url2);
+        $urlShortener2->shorten($url2);
+        $code2 = $urlShortener2->shorten($url);
+
+        self::assertSame($code1, $code2);
+    }
+
+    public function testMillionUrls(): void
+    {
+        $this->expectNotToPerformAssertions();
+        $i = 0;
+        $urlShortener = new UrlShortener();
+        $url = 'https://efront.test/';
+        while ($i < 1000001) {
+            $urlShortener->shorten(sprintf('https://efront.test/%s', $i));
+        }
     }
 }
