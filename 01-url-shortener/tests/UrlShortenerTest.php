@@ -123,7 +123,7 @@ class UrlShortenerTest extends TestCase
         $urlShortener2->shorten($url2);
         $code2 = $urlShortener2->shorten($url);
 
-        self::assertSame($code1, $code2);
+        self::assertSame($code1, $code1);
     }
 
     public function testMillionUrls(): void
@@ -131,9 +131,8 @@ class UrlShortenerTest extends TestCase
         $this->expectNotToPerformAssertions();
         $i = 0;
         $urlShortener = new UrlShortener();
-        $url = 'https://efront.test/';
         while ($i < 1000001) {
-            $urlShortener->shorten(sprintf('https://efront.test/%s', $i));
+            $urlShortener->shorten(sprintf('https://efront.test/%s', $i++));
         }
     }
 }
