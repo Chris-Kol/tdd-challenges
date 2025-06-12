@@ -18,22 +18,40 @@ class PasswordValidatorTest extends TestCase
 
     protected function setUp(): void
     {
-        // TODO: Initialize your implementation here
+        parent::setUp();
+        $this->validator = new PasswordValidator();
     }
 
     public function testMinimumLengthValidation(): void
     {
-        $this->markTestIncomplete('Implement this test');
+        $expected = new ValidationResult(
+            isValid: false,
+            errors: ['password.length' => 'Password must be at least 8 characters long']
+        );
+        $result = $this->validator->validate('Ab1!');
+        $this->assertEquals($expected, $result);
     }
 
     public function testUppercaseLetterValidation(): void
     {
-        $this->markTestIncomplete('Implement this test');
+        $expected = new ValidationResult(
+            isValid: false,
+            errors: ['password.uppercase' => 'Password must contain at least one uppercase letter']
+        );
+
+        $result = $this->validator->validate('ab1!ab1!ab1!');
+        $this->assertEquals($expected, $result);
     }
 
     public function testLowercaseLetterValidation(): void
     {
-        $this->markTestIncomplete('Implement this test');
+        $expected = new ValidationResult(
+            isValid: false,
+            errors: ['password.lowercase' => 'Password must contain at least one lowercase letter']
+        );
+
+        $result = $this->validator->validate('A21!21!21!');
+        $this->assertEquals($expected, $result);
     }
 
     public function testDigitValidation(): void

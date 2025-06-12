@@ -6,6 +6,18 @@ namespace App;
 
 class PasswordValidator implements PasswordValidatorInterface
 {
+    private array $errors = [];
+    private array $ruleStrategy;
+
+    public function __construct()
+    {
+        $this->ruleStrategy = [
+            new PasswordLengthRule(),
+            new PasswordContainsUppercaseRule(),
+            new PasswordContainsLowercaseRule(),
+        ];
+    }
+
     /**
      * Validates a password against all rules
      * @param string $password The password to validate
@@ -13,8 +25,10 @@ class PasswordValidator implements PasswordValidatorInterface
      */
     public function validate(string $password): ValidationResult
     {
-        // This is just a placeholder to make the tests runnable
-        throw new \Exception('Not implemented');
+        return new ValidationResult(
+            isValid: $this->isValid($password),
+            errors: $this->errors
+        );
     }
 
     /**
@@ -24,7 +38,14 @@ class PasswordValidator implements PasswordValidatorInterface
      */
     public function isValid(string $password): bool
     {
-        // This is just a placeholder to make the tests runnable
-        throw new \Exception('Not implemented');
+        foreach ($this->ruleStrategy as $rule) {
+            try {
+                $rule->validate($password);
+            } catch (\InvalidArgumentException $e) {
+                $this->errors[$rule->getKey()] = $e->getMessage();
+            }
+        }
+
+        return empty($this->errors);
     }
 }
