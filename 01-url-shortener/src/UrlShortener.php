@@ -16,6 +16,8 @@ class UrlShortener implements UrlShortenerInterface
     // Participants will implement this class during the challenge
     public function shorten(string $url): string
     {
+        $url = str_replace(' ', urlencode(' '), $url);
+
         if (filter_var($url, FILTER_VALIDATE_URL) === false) {
             throw new InvalidUrlException($url);
         }

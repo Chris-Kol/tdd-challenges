@@ -57,7 +57,12 @@ class UrlShortenerTest extends TestCase
 
     public function testSameLongUrlProducesSameCode(): void
     {
-        $this->markTestIncomplete('Implement this test');
+        $longUrl = 'https://example.com/some/very/long/url/that/should/be/shortened';
+
+        $short = $this->urlShortener->shorten($longUrl);
+        $secondShort = $this->urlShortener->shorten($longUrl);
+
+        $this->assertEquals($short, $secondShort);
     }
 
     /**
@@ -65,7 +70,8 @@ class UrlShortenerTest extends TestCase
      */
     public function testValidUrlFormats(string $url): void
     {
-        $this->markTestIncomplete('Implement this test');
+        $this->expectNotToPerformAssertions();
+        $this->urlShortener->shorten($url);
     }
 
     public function validUrlProvider(): array
