@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tests;
 
+use App\Exception\CodeNotFoundException;
+use App\Exception\InvalidUrlException;
 use App\UrlShortenerInterface;
 use PHPUnit\Framework\TestCase;
 use App\UrlShortener;
@@ -28,23 +30,31 @@ class UrlShortenerTest extends TestCase
 
     public function testGetUrlReturnsOriginalUrl(): void
     {
-        $hashedUrl = $this->urlShortener->shorten("https://friv.com");
-        assertEquals($this->urlShortener->getUrl($hashedUrl),"https://friv.com");
+        $code = $this->urlShortener->shorten("https://friv.com");
+        assertEquals($this->urlShortener->getUrl($code),"https://friv.com");
     }
 
     public function testShortenThrowsExceptionForInvalidUrl(): void
     {
-        $this->markTestIncomplete('Implement this test');
+        $this->expectException(InvalidUrlException::class);
+        $this->expectExceptionMessage("The URL is not valid.");
+        $this->urlShortener->shorten("rejvbrevbnoerv");
     }
 
     public function testGetUrlThrowsExceptionForNonExistentCode(): void
     {
-        $this->markTestIncomplete('Implement this test');
+        $this->expectException(CodeNotFoundException::class);
+        $this->expectExceptionMessage("Code not exists");
+        $this->urlShortener->getUrl("nonexistentcode");
     }
 
     public function testSameLongUrlProducesSameCode(): void
     {
-        $this->markTestIncomplete('Implement this test');
+        $url = "https://friv.com";
+        $code1 = $this->urlShortener->shorten($url);
+
+        $code2 = $this->urlShortener->shorten($url);
+        $this->assertSame($code1, $code2);
     }
 
     /**
@@ -52,7 +62,14 @@ class UrlShortenerTest extends TestCase
      */
     public function testValidUrlFormats(string $url): void
     {
-        $this->markTestIncomplete('Implement this test');
+
+        try {
+            $this->urlShortener->shorten($url);
+            $this->expectNotToPerformAssertions();
+        }catch (\Exception $e) {
+            $this->fail("Expect no to throw an exception " . $e);
+        }
+
     }
 
     public function validUrlProvider(): array
