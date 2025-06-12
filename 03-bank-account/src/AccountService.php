@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace App;
 
-use AccountServiceInterface;
 use App\Exception\InsufficientFundsException;
 use App\Exception\InvalidAmountException;
 
 class AccountService implements AccountServiceInterface
 {
+    private int $balance = 0;
+
+    private $statements = [];
+
     /**
      * Deposit money into the account
      * @param int $amount The amount to deposit (in cents)
@@ -17,8 +20,12 @@ class AccountService implements AccountServiceInterface
      */
     public function deposit(int $amount): void
     {
-        // This is just a placeholder to make the tests runnable
-        throw new \Exception('Not implemented');
+        if ($amount <= 0){
+            throw new InvalidAmountException($amount);
+        }
+
+        $this->balance += $amount;
+        $this->statements = array_merge([new Transaction($amount, $this->balance)], $this->statements);
     }
 
     /**
@@ -29,8 +36,19 @@ class AccountService implements AccountServiceInterface
      */
     public function withdraw(int $amount): void
     {
-        // This is just a placeholder to make the tests runnable
-        throw new \Exception('Not implemented');
+        if ($amount <= 0) {
+            throw new InvalidAmountException($amount);
+        }
+
+        $newBalance = $this->balance - $amount;
+
+        if ($newBalance < 0) {
+            throw new InsufficientFundsException($amount, $this->balance);
+        }
+
+        $this->balance = $newBalance;
+
+        $this->statements = array_merge([new Transaction(-$amount, $this->balance)], $this->statements);
     }
 
     /**
@@ -39,8 +57,16 @@ class AccountService implements AccountServiceInterface
      */
     public function printStatement(): string
     {
-        // This is just a placeholder to make the tests runnable
-        throw new \Exception('Not implemented');
+        if (empty($this->statements)) {
+            return '';
+        }
+
+        $result = "DATE | AMOUNT | BALANCE\n";
+        foreach ($this->statements as $statement) {
+            $result .= $statement->toString();
+        }
+
+        return $result;
     }
 
     /**
@@ -49,7 +75,6 @@ class AccountService implements AccountServiceInterface
      */
     public function getBalance(): int
     {
-        // This is just a placeholder to make the tests runnable
-        throw new \Exception('Not implemented');
+        return $this->balance;
     }
 }
