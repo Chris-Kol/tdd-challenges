@@ -36,8 +36,10 @@ class Grid implements GridInterface
      */
     public function isValidPosition(int $x, int $y): bool
     {
-        // This is just a placeholder to make the tests runnable
-        throw new \Exception('Not implemented');
+        if ($x < 0 || $y < 0) {
+            return false;
+        }
+        return $x <= $this->width && $y <= $this->height;
     }
 
     /**
@@ -48,8 +50,7 @@ class Grid implements GridInterface
      */
     public function hasObstacle(int $x, int $y): bool
     {
-        // This is just a placeholder to make the tests runnable
-        throw new \Exception('Not implemented');
+        return isset($this->obstacles[$x][$y]);
     }
 
     /**

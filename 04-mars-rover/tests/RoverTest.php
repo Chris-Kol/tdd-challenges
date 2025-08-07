@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace Tests;
 
+use App\Grid;
 use App\GridInterface;
+use App\Rover;
 use App\RoverInterface;
 use PHPUnit\Framework\TestCase;
+
 
 /**
  * @covers \App\Rover
@@ -19,7 +22,9 @@ class RoverTest extends TestCase
     protected function setUp(): void
     {
         // Initialize a 10x10 grid with obstacles at (2,2) and (5,5)
+        $this->grid = new Grid(10, 10, [[2,2], [5,5]]);
         // Initialize a rover at position (0,0) facing north
+        $this->rover = new Rover($this->grid, 0, 0,"N");
     }
 
     public function testInitialPosition(): void
